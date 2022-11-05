@@ -10,8 +10,8 @@ app.get(`/renew`, async (req, res) => {
     const renewal = await db.get(`renewal-${req.query.id}`)    
     if (renewal > Date.now()) return res.redirect("/dashboard")
     const coins = await db.get(`coins-${req.session.userinfo.id}`) ? await db.get(`coins-${req.session.userinfo.id}`) : 0;
-    if (settings.renewals.cost > coins) return res.redirect("/dashboard?err=CANNOTAFFORDRENEWAL")
-    await db.set(`coins-${req.session.userinfo.id}`, (coins - settings.renewals.cost))
-    await db.set(`renew-${req.query.id}`, (renew + (settings.renewals.delay * 86400000)))
+    if (settings.renewal.cost > coins) return res.redirect("/dashboard?err=CANNOTAFFORDRENEWAL")
+    await db.set(`coins-${req.session.userinfo.id}`, (coins - settings.renewal.cost))
+    await db.set(`renewal-${req.query.id}`, (renewal + (settings.renewal.delay * 86400000)))
     return res.redirect("/dashboard?renewed=true")
 })}}
