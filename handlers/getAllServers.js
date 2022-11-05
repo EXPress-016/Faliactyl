@@ -9,6 +9,6 @@ module.exports = async () => {
             }
         }
     )
-    return await rawData.json()
+    return rawData.json()
 }
 
